@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philippine National Heroes</title>
+    <style>
+        body { background-image: url('homepbackground.png');
+               background-size: cover;
+               background-position: center;
+               background-repeat: no-repeat;
+               background-attachment: fixed;
+               height: 100vh;
+               overflow: hidden;
+               font-family: book antiqua, sans-serif;
+               text-align: center;
+               margin: 0;
+               padding: 0;
+}
+
+        .container { padding: 50px; }
+        h1 { color: #333; 
+             font-size: 80px; 
+}
+
+        .start-button { background-color: #3a3939;
+                        border: 2px solid #0f0f0f;
+                        padding: 15px 30px;
+                        border-radius: 5px;
+                        font-family: book antiqua, sans-serif;
+                        font-size: 20px;
+                        color: white;
+                        transition: all 0.3s ease;
+}
+
+        .proceed-button { background-color: #3a3939;
+                          border: 2px solid #0f0f0f;
+                          padding: 15px 30px;
+                          border-radius: 5px;
+                          font-family: book antiqua, sans-serif;
+                          font-size: 20px;
+                          color: white;
+                          transition: all 0.3s ease;
+}
+
+        .play-button { padding: 35px 50px;
+                       font-family: book antiqua, sans-serif;
+                       font-size: 20px;
+                       cursor: pointer;
+                       background-color: #3a3939;
+                       color: white;
+                       border: 2px solid #0f0f0f;
+                       border-radius: 10px;
+                       transition: all 0.3s ease;
+                       position: relative;
+                       top: 100px; 
+}
+
+        .finish-button { background-color: #3a3939;
+                        border: 2px solid #0f0f0f;
+                        padding: 15px 30px;
+                        border-radius: 5px;
+                        font-family: book antiqua, sans-serif;
+                        font-size: 20px;
+                        color: white;
+                        transition: all 0.3s ease;
+}
+
+        .finish-button:hover { background-color: #5a5858; }
+
+        .start-button:hover { background-color: #3a3939;
+                              border: 2px solid #0f0f0f;
+                              transform: scale(1.12);
+}
+
+        .proceed-button:hover { background-color: #3a3939;
+                                border: 2px solid #0f0f0f;
+                                transform: scale(1.12);
+}
+            
+        .play-button:hover { background-color: #3a3939;
+                             border: 2px solid #0f0f0f;
+                             transform: scale(1.12);
+}
+        .circle-button:hover { margin: 0px;
+                               padding: 0px;
+                               background-color: #2a2929;
+                               border: 2px solid #161615;
+                               display: inline-block;
+                               top: 20px; 
+                               width: 6vw; 
+                               height: 8vh; 
+                               font-size: 28px;
+                               cursor: pointer; 
+                               transition: all 0.3s ease; 
+}
+
+        .question-box { margin: 20px;
+                        padding: 15px;
+                        border: 2px solid #161615;
+                        display: inline-block;
+                        background-image: url('paper.jpg');
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        font-size: 35px;
+                        height: auto; 
+                        max-width: 90%; 
+                        box-sizing: border-box;
+}
+
+        #video-container { display: none; 
+                           margin-top: 20px; 
+}
+        
+        .guidelines { display: none; 
+                      margin-top: -110px; 
+                      padding: 20px; 
+                      top: 0;
+                      left: 0;
+                      width: 96.3vw; 
+                      height: 300vh; 
+                      z-index: 10;  
+                      font-size: 35px;
+                      text-align: center;
+                      position: relative;
+                      top: 140px;
+                      color: #333;
+                      font-size: 30px;
+                      
+}
+
+        .play-page { display: none; 
+                     margin-top: -100px; 
+                     padding: 20px;                                                     
+}
+
+        .question-selection { display: flex;
+                              flex-direction: column;
+                              justify-content: flex-start; 
+                              align-items: center;
+                              padding-top: 300px; 
+                              font-family: "Book Antiqua", sans-serif;
+                              background-image: url('MAPA.png');
+                              background-size: cover;
+                              background-position: center;
+                              background-repeat: no-repeat;
+                              background-attachment: fixed; 
+                              width: 100vw;
+                              height: 100vh;
+                              overflow: hidden;
+                              z-index: 10;
+}
+
+        .congratulations h1 { font-size: 60px;
+                              color: #1a1a1a;
+                              height: 10vh;
+}
+ 
+        .congratulations button { font-size: 20px;
+                                  padding: 10px 25px;
+                                  background-color: #3a3939;
+                                  color: white;
+                                  border: 2px solid #0f0f0f;
+                                  border-radius: 5px;
+                                  transition: all 0.3s ease;
+                                  margin-top: 40vh;
+}
+
+        .congratulations button:hover { transform: scale(1.1);
+                                        background-color: #5a5858;
+}
+
+        .play-page { display: flex; 
+                     justify-content: center; 
+                     align-items: center; 
+                     height: 100vh; }
+ 
+        .circle-container { position: relative;
+                            width: 100%;
+                            height: 100vh;
+}
+
+        .circle-button { position: absolute;
+                         width: 2vw;
+                         height: 2vw;
+                         border-radius: 50%;
+                         background-color: #2a2929;
+                         color: white;
+                         font-size: 12px;
+                         border: 2px solid #0f0f0f;
+                         font-family: "Book Antiqua", sans-serif;
+                         cursor: pointer;
+                         transition: all 0.3s ease;
+                         top: 5%;
+}
+
+        .circle-button:hover { transform: scale(1.12);
+                               width: 4vw;
+                               height: 3vw;
+                               background-color: #3a3939;
+}
+
+        .finish-button { display: none; 
+                         margin-top: 20px; 
+}
+
+        .button { margin: 10px; 
+                  padding: 10px; 
+                  cursor: pointer; 
+}  
+        
+        .answer-container { display: flex;
+                            flex-wrap: wrap;
+                            justify-content: center;
+                            gap: 15px;
+                            max-width: 500px;
+                            margin: auto;
+}
+
+        .answer-button { flex: 1 1 40%;
+                         min-width: 180px;
+                         max-width: 200px;
+                         height: 60px;
+                         padding: 10px;
+                         font-size: 18px;
+                         background-color: #5a5858;
+                         color: white;
+                         border: none;
+                         border-radius: 5px;
+                         text-align: center;
+                         cursor: pointer;
+                         font-family: book antiqua, sans-serif;
+                         transition: all 0.3s ease;
+                         display: flex;
+                         align-items: center;
+                         justify-content: center;
+}
+
+        .answer-button:hover { background-color: #3a3939;
+                               border: 2px solid #0f0f0f;
+                               transform: scale(1.12);
+}
+
+        .video-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+}
+
+        #hero-video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+}
+
+        .lives-container { position: absolute;
+                           top: 1px;
+                           left: 1px;
+                           font-size: 25px;
+                           z-index: 1000;
+}
+
+        .popup { position: fixed;
+                 top: 0;
+                 left: 0;
+                 width: 100vw;
+                 height: 100vh;
+                 background-color: rgba(0, 0, 0, 0.7);
+                 z-index: 1001;
+                 display: flex;
+                 align-items: center;
+                 justify-content: center;
+}
+
+        .popup-content { background-color: #beb7b7;
+                         padding: 40px;
+                         border-radius: 15px;
+                         text-align: center;
+                         font-size: 24px;
+                         color: #333;
+                         box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+        #playAgainBtn { margin-top: 20px;
+                        font-size: 18px;
+                        padding: 10px 20px;
+                        background-color: #3a3939;
+                        color: rgb(244, 238, 238);
+                        border: none;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        transition: transform 0.3s ease;
+}
+
+        #playAgainBtn:hover { transform: scale(1.1);
+                              background-color: #5a5858;
+}
+
+        .shake { animation: shake 0.2s;
+                 animation-iteration-count: 3;
+}
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+}
+
+        .correct-animation { display: none;
+                             position: fixed;
+                             top: 40%;
+                             left: 50%;
+                             transform: translate(-50%, -50%);
+                             font-size: 3rem;
+                             color: #2f2f2f;
+                             background-color: rgba(237, 196, 91, 0.9);
+                             border: 2px solid #915c1f;
+                             border-radius: 10px;
+                             padding: 20px 40px;
+                             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+                             animation: pop 1.30s ease-in-out forwards;
+                             z-index: 9999;
+}
+
+        @keyframes pop {
+                 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+                 20% { opacity: 1; }
+                 50% { transform: translate(-50%, -50%) scale(1.2); }
+                 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+    </style>
+</head>
+
+<audio id="background-music" autoplay loop>
+    <source src="Kundiman 1800 (Love Song circa 1800).mp3" type="audio/mpeg">
+</audio>
+
+<audio id="click-sound">
+    <source src="click sound.mp4" type="audio/mpeg">
+</audio>
+
+<audio id="cheer-sound">
+    <source src="Cheer sound.mp4" type="audio/mpeg">
+</audio>
+
+<audio id="disappointed-sound">
+    <source src="gameover sound.mp4" type="audio/mpeg">
+</audio>
+
+<body>
+    <div class="container" id="home">
+        <h1>THE PHILIPPINE NATIONAL HEROES</h1>
+        <button class="start-button" onclick="showGuidelines()">Start</button>
+    </div>
+
+    <div class="container guidelines" id="guidelines">
+        <h2>HOW TO PLAY?</h2>
+        <p>Press button number 1 and answer the question. If the player answers correctly, a video about the hero will be displayed. After watching the video, proceed to button number 2 and answer the next question. Continue this process until you reach button number 9, which is the finish line. You have 10 lives. For every incorrect answer, one life will be deducted.</p>
+        <button class="proceed-button" onclick="showPlayPage()">Proceed</button>
+    </div>
+
+    <div class="play-page" id="play-page" style="display: none;">
+        <button class="play-button" onclick="showQuestionSelection()">Play</button>
+    </div>
+
+    <div class="container question-selection" id="question-selection" style="display: none;">
+        <div class="circle-container">
+            <button class="circle-button" onclick="startQuiz(1)" style="margin-top: 90px; left: 38%;">1</button>
+            <button class="circle-button" onclick="startQuiz(2)" style="top: 11%; left: 40%;">2</button>
+            <button class="circle-button" onclick="startQuiz(3)" style="top: 10%; left: 30%;">3</button>
+            <button class="circle-button" onclick="startQuiz(4)" style="top: -3%; left: 33%;">4</button>
+            <button class="circle-button" onclick="startQuiz(5)" style="top: -16%; left: 30%;">5</button>
+            <button class="circle-button" onclick="startQuiz(6)" style="top: -21%; left: 22%;">6</button>
+            <button class="circle-button" onclick="startQuiz(7)" style="top: -33%; left: 28%;">7</button>
+            <button class="circle-button" onclick="startQuiz(8)" style="top: -45%; left: 22%;">8</button>
+            <button class="circle-button" onclick="startQuiz(9)" style="top: -55%; left: 28%;">9</button>
+        </div>
+    </div>
+
+    <div class="container" id="quiz-container" style="display:none;">
+        <div class="lives-container" id="lives">
+            ❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
+        </div>
+        <div class="question-box">
+            <p id="question">Press the button to start!</p>
+            <div id="answers"></div>
+        </div>
+    </div>    
+
+    <div class="video-page" id="video-page" style="display:none;">
+        <video id="hero-video" controls autoplay>
+            <source id="video-source" src="" type="video/mp4">
+        </video>
+        <button id="next-button" class="finish-button" onclick="backToSelection()" style="position: absolute; bottom: 20px; right: 120px;">Next</button>
+        <button id="finish-button" class="finish-button" onclick="showCongratulations()" style="position: absolute; bottom: 20px; right: 20px;">Finish</button>
+    </div>    
+
+    <div class="container congratulations" id="congratulations">
+        <h1>🎉🥳👏🏼CONGRATULATIONS! YOU MADE IT!👏🏼🥳🎉</h1>
+        <button onclick="restartGame()">Restart Game</button>
+    </div>
+
+    <div id="correct-animation" class="correct-animation">✅ Correct!</div>
+
+    <script>
+        const questions = [
+            {
+                question: "1. A Filipino military leader best known for her role as the female leader of the Ilocano independence movement from Spain.",
+                answers: ["Gabriela Silang", "Teresa Magbanua", "Mariah Clara", "Josefa Llanes Escoda"],
+                correct: 0,
+                video: "Gabriela Silang.mp4"
+            },
+            {
+                question: "2. She was a Filipino revolutionary. She became known as 'Tandang Sora' because of her old age during the Philippine Revolution (1896-1899).",
+                answers: ["Maggie Leones", "Maria Orosa", "Trinidad Tecson", "Melchora Aquino"],
+                correct: 3,
+                video: "Aquino.mp4"
+            },
+            {
+                question: "3. He was a Filipino painter, sculptor, and late-nineteenth-century political figure in the Philippine Revolution.",
+                answers: ["Apolinario Mabini", "Emilio Aguinaldo", "Juan Luna", "Dakilang Lumpo"],
+                correct: 2,
+                video: "Juan Luna.mp4"
+            },
+            {
+                question: "4. He was a great Muslim leader who ruled Mindanao for 52 years and defended it from Spanish conquerors.",
+                answers: ["Andres Bonifacio", "Sultan Dipatuan Kudarat", "General Gregorio del Pilar", "Melchora Aquino"],
+                correct: 1,
+                video: "Sultan Kudarat.mp4"
+            },
+            {
+                question: "5. He was a writer and patriot who inspired modern historians to study revolution, justice, and democracy.",
+                answers: ["Sultan Dipatuan Kudarat", "Jose Rizal", "Marcelo H. del Pilar", "Juan Luna"],
+                correct: 2,
+                video: "Marcelo del Pilar.mp4"
+            },
+            {
+                question: "6. Known as the 'Dakilang Lumpo,' he was a brilliant lawyer, theorist, spokesman, and political philosopher who served as Emilio Aguinaldo's chief advisor.",
+                answers: ["Apolinario Mabini", "Gabriela Silang", "Sultan Dipatuan Kudarat", "Marcelo H. del Pilar"],
+                correct: 0,
+                video: "Apolinario Mabini.mp4"
+            },
+            {
+                question: "7. A Filipino leader who became the first president of the Philippine new republic under the Malolos Congress.",
+                answers: ["San Pedro", "Josefa", "Hilario", "Emilio Aguinaldo"],
+                correct: 3,
+                video: "Emilio Aguinaldo.mp4"
+            },
+            {
+                question: "8. The 'Father of the Philippine Revolution,' founded and led the Katipunan, a secret society that began the fight for independence from Spain.",
+                answers: ["Dakilang Lumpo", "Mabini", "Andres Bonifacio", "Gatmaitan"],
+                correct: 2,
+                video: "Andres Bonifacio.mp4"
+            },
+            {
+                question: "9. A patriot, doctor, writer, and nationalist who rose to recognition through his literary works.",
+                answers: ["Andres Bonifacio", "Ancheta", "Jose Rizal", "del Pilar"],
+                correct: 2,
+                video: "Jose Rizal.mp4"
+            }
+        ];
+    
+        let currentQuestion = 0;
+        let lives = 10;
+        let lastCompletedLevel = -1;
+        let completedLevels = new Set();
+ 
+
+        function showGuidelines() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("guidelines").style.display = "block";
+            backgroundMusic.play().catch(err => {
+                console.log("Autoplay blocked: ", err);
+            });
+        }
+
+        function showPlayPage() {
+            document.getElementById("guidelines").style.display = "none";
+            document.getElementById("play-page").style.display = "flex";
+        }
+    
+        function showQuestionSelection() {
+            document.getElementById("play-page").style.display = "none";
+            document.getElementById("question-selection").style.display = "block";
+
+            const buttons = document.querySelectorAll(".circle-button");
+            buttons.forEach((btn, index) => {
+                if (index > lastCompletedLevel + 1) {
+                    btn.disabled = true;
+                    btn.style.opacity = "0.5";
+                    btn.style.cursor = "not-allowed";
+                } else {
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                    btn.style.cursor = "pointer";
+                }
+            });
+        }
+
+    
+        function startQuiz(index) {
+            if (index - 1 > lastCompletedLevel + 1) {
+                alert("Please complete the current level first before proceeding.");
+                return;
+            }
+
+            currentQuestion = index - 1; 
+            document.getElementById("question-selection").style.display = "none";
+            document.getElementById("quiz-container").style.display = "block";
+            showQuestion();
+        }
+
+    
+        function showQuestion() {
+            const questionData = questions[currentQuestion];
+            document.getElementById("question").innerText = questionData.question;
+
+            let answersDiv = document.getElementById("answers");
+            answersDiv.innerHTML = ""; 
+
+            let answerContainer = document.createElement("div");
+            answerContainer.classList.add("answer-container");
+
+            questionData.answers.forEach((answer, index) => {
+                let button = document.createElement("button");
+                button.innerText = answer;
+                button.classList.add("answer-button");
+                button.onclick = () => checkAnswer(index);
+
+                answerContainer.appendChild(button);
+            });
+
+            answersDiv.appendChild(answerContainer);
+        }
+
+        function checkAnswer(selectedIndex) {
+            let correctIndex = questions[currentQuestion].correct;
+            const answerButtons = document.querySelectorAll(".answer-button");
+
+            answerButtons.forEach(button => button.disabled = true);
+
+            if (selectedIndex === correctIndex) {
+                const correctAnim = document.getElementById("correct-animation");
+                correctAnim.style.display = "block";
+
+                if (!completedLevels.has(currentQuestion)) {
+                    completedLevels.add(currentQuestion);
+                    if (currentQuestion > lastCompletedLevel) {
+                        lastCompletedLevel = currentQuestion;
+                    }
+                }
+
+                setTimeout(() => {
+                    correctAnim.style.display = "none";
+                    showVideo(); 
+                }, 1500); 
+            }
+
+            else {
+                const selectedButton = answerButtons[selectedIndex];
+
+                selectedButton.style.backgroundColor = "#e74c3c";
+                selectedButton.classList.add("shake");
+
+                lives--;
+                updateLives();
+
+                setTimeout(() => {
+                    selectedButton.style.backgroundColor = "";
+                    selectedButton.classList.remove("shake");
+                    answerButtons.forEach(button => button.disabled = false);
+
+                    if (lives <= 0) {
+                        showGameOverPopup();
+                    }
+                }, 1200);
+            }
+        }
+
+        function showVideo() {
+            let videoPage = document.getElementById("video-page");
+            let videoElement = document.getElementById("hero-video");
+            let videoSource = document.getElementById("video-source");
+
+            document.getElementById("quiz-container").style.display = "none";
+            videoPage.style.display = "block";
+            videoSource.src = questions[currentQuestion].video;
+            videoElement.load();
+            backgroundMusic.pause();
+
+            videoElement.play().catch(error => {
+                console.log("Autoplay failed:", error);
+            });
+
+            videoElement.onended = () => {
+                backgroundMusic.play();
+            };
+
+            document.getElementById("next-button").style.display = 
+                currentQuestion < questions.length - 1 ? "inline-block" : "none";
+
+            document.getElementById("finish-button").style.display = 
+                currentQuestion === questions.length - 1 ? "inline-block" : "none";
+        }
+
+        function showGameOverPopup() {
+            const popup = document.createElement('div');
+            popup.classList.add('popup');
+            popup.innerHTML = `
+                <div class="popup-content">
+                <p>Game Over! You've run out of lives.</p>
+                <button id="playAgainBtn">Play Again</button>
+            </div>
+            `;
+            document.body.appendChild(popup);
+
+            const disappointedSound = document.getElementById("disappointed-sound");
+            disappointedSound.currentTime = 0;
+            disappointedSound.play().catch(err => console.log("Disappointed sound error:", err));
+
+            document.getElementById('playAgainBtn').addEventListener('click', () => {
+            document.body.removeChild(popup);
+            document.getElementById("question-selection").style.display = "block";
+            document.getElementById("quiz-container").style.display = "none";
+            document.getElementById("video-page").style.display = "none";
+
+            lives = 10;
+            lastCompletedLevel = -1;
+            completedLevels.clear();
+            updateLives();
+            showQuestionSelection(); // reapply button visibility
+            });
+
+        }
+
+
+        function backToSelection() {
+            const videoElement = document.getElementById("hero-video");
+            videoElement.pause(); 
+            videoElement.currentTime = 0;
+
+            backgroundMusic.play();
+
+            if (!completedLevels.has(currentQuestion)) {
+                completedLevels.add(currentQuestion);
+                lastCompletedLevel = currentQuestion;
+            }
+
+            document.getElementById("video-page").style.display = "none";
+
+            // Here's the fix: re-run button enabling logic
+            showQuestionSelection(); 
+        }
+
+        function restartGame() {
+            lives = 10;
+            updateLives();
+            document.getElementById("congratulations").style.display = "none";
+            document.getElementById("video-page").style.display = "none";
+            document.getElementById("quiz-container").style.display = "none";
+            document.getElementById("question-selection").style.display = "block";
+        }
+
+        function updateLives() {
+            document.getElementById("lives").innerText = "❤️".repeat(lives);
+        }
+
+        function resetGameBoard() {
+            const buttons = document.querySelectorAll('.game-button'); 
+            buttons.forEach(button => {
+                button.textContent = '';
+                button.disabled = false;
+            });
+
+            currentPlayer = 'X'; 
+            gameOver = false;
+        }
+
+        function showCongratulations() {
+            const videoElement = document.getElementById("hero-video");
+            videoElement.pause();
+            videoElement.currentTime = 0;
+
+            backgroundMusic.play();
+
+            const cheerSound = document.getElementById("cheer-sound");
+            cheerSound.currentTime = 0;
+            cheerSound.play().catch(err => console.log("Cheer sound error:", err));
+
+            document.getElementById("quiz-container").style.display = "none";
+            document.getElementById("video-page").style.display = "none";
+            document.getElementById("congratulations").style.display = "block";
+        }
+
+        function restartGame() {
+            lives = 10;
+            lastCompletedLevel = -1;
+            completedLevels.clear();
+            updateLives();
+
+            document.getElementById("congratulations").style.display = "none";
+            document.getElementById("video-page").style.display = "none";
+            document.getElementById("quiz-container").style.display = "none";
+            document.getElementById("question-selection").style.display = "block";
+
+            showQuestionSelection(); // reapply button visibility
+        }
+
+        const backgroundMusic = document.getElementById("background-music");
+       
+        const clickSound = document.getElementById("click-sound");
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll("button");
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                    clickSound.currentTime = 0; 
+                    clickSound.play().catch(err => console.log("Click sound error:", err));
+                });
+            });
+        });
+
+    </script>
