@@ -485,6 +485,9 @@
         
                 document.addEventListener("DOMContentLoaded", () => {
                     this.setupButtonSounds();
+
+                    const congrats = document.getElementById("congratulations");
+                if (congrats) congrats.style.display = "none";
                 });
             }
         
