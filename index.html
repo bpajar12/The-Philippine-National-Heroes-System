@@ -392,7 +392,7 @@
 
     <div class="container" id="quiz-container" style="display:none;">
         <div class="lives-container" id="lives">
-            ❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
+            ❤️❤️❤️❤️❤️
         </div>
         <div class="question-box">
             <p id="question">Press the button to start!</p>
@@ -416,321 +416,307 @@
     <div id="correct-animation" class="correct-animation">✅ Correct!</div>
 
     <script>
-        const questions = [
-            {
-                question: "1. A Filipino military leader best known for her role as the female leader of the Ilocano independence movement from Spain.",
-                answers: ["Gabriela Silang", "Teresa Magbanua", "Mariah Clara", "Josefa Llanes Escoda"],
-                correct: 0,
-                video: "Gabriela Silang.mp4"
-            },
-            {
-                question: "2. She was a Filipino revolutionary. She became known as 'Tandang Sora' because of her old age during the Philippine Revolution (1896-1899).",
-                answers: ["Maggie Leones", "Maria Orosa", "Trinidad Tecson", "Melchora Aquino"],
-                correct: 3,
-                video: "Aquino.mp4"
-            },
-            {
-                question: "3. He was a Filipino painter, sculptor, and late-nineteenth-century political figure in the Philippine Revolution.",
-                answers: ["Apolinario Mabini", "Emilio Aguinaldo", "Juan Luna", "Dakilang Lumpo"],
-                correct: 2,
-                video: "Juan Luna.mp4"
-            },
-            {
-                question: "4. He was a great Muslim leader who ruled Mindanao for 52 years and defended it from Spanish conquerors.",
-                answers: ["Andres Bonifacio", "Sultan Dipatuan Kudarat", "General Gregorio del Pilar", "Melchora Aquino"],
-                correct: 1,
-                video: "Sultan Kudarat.mp4"
-            },
-            {
-                question: "5. He was a writer and patriot who inspired modern historians to study revolution, justice, and democracy.",
-                answers: ["Sultan Dipatuan Kudarat", "Jose Rizal", "Marcelo H. del Pilar", "Juan Luna"],
-                correct: 2,
-                video: "Marcelo del Pilar.mp4"
-            },
-            {
-                question: "6. Known as the 'Dakilang Lumpo,' he was a brilliant lawyer, theorist, spokesman, and political philosopher who served as Emilio Aguinaldo's chief advisor.",
-                answers: ["Apolinario Mabini", "Gabriela Silang", "Sultan Dipatuan Kudarat", "Marcelo H. del Pilar"],
-                correct: 0,
-                video: "Apolinario Mabini.mp4"
-            },
-            {
-                question: "7. A Filipino leader who became the first president of the Philippine new republic under the Malolos Congress.",
-                answers: ["San Pedro", "Josefa", "Hilario", "Emilio Aguinaldo"],
-                correct: 3,
-                video: "Emilio Aguinaldo.mp4"
-            },
-            {
-                question: "8. The 'Father of the Philippine Revolution,' founded and led the Katipunan, a secret society that began the fight for independence from Spain.",
-                answers: ["Dakilang Lumpo", "Mabini", "Andres Bonifacio", "Gatmaitan"],
-                correct: 2,
-                video: "Andres Bonifacio.mp4"
-            },
-            {
-                question: "9. A patriot, doctor, writer, and nationalist who rose to recognition through his literary works.",
-                answers: ["Andres Bonifacio", "Ancheta", "Jose Rizal", "del Pilar"],
-                correct: 2,
-                video: "Jose Rizal.mp4"
-            }
-        ];
-    
-        let currentQuestion = 0;
-        let lives = 10;
-        let lastCompletedLevel = -1;
-        let completedLevels = new Set();
- 
-
-        function showGuidelines() {
-            document.getElementById("home").style.display = "none";
-            document.getElementById("guidelines").style.display = "block";
-            backgroundMusic.play().catch(err => {
-                console.log("Autoplay blocked: ", err);
-            });
-        }
-
-        function showPlayPage() {
-            document.getElementById("guidelines").style.display = "none";
-            document.getElementById("play-page").style.display = "flex";
-        }
-    
-        function showQuestionSelection() {
-            document.getElementById("play-page").style.display = "none";
-            document.getElementById("question-selection").style.display = "block";
-
-            const buttons = document.querySelectorAll(".circle-button");
-            buttons.forEach((btn, index) => {
-                if (index > lastCompletedLevel + 1) {
-                    btn.disabled = true;
-                    btn.style.opacity = "0.5";
-                    btn.style.cursor = "not-allowed";
-                } else {
-                    btn.disabled = false;
-                    btn.style.opacity = "1";
-                    btn.style.cursor = "pointer";
-                }
-            });
-        }
-
-    
-        function startQuiz(index) {
-            if (index - 1 > lastCompletedLevel + 1) {
-                alert("Please complete the current level first before proceeding.");
-                return;
-            }
-
-            currentQuestion = index - 1; 
-            document.getElementById("question-selection").style.display = "none";
-            document.getElementById("quiz-container").style.display = "block";
-            showQuestion();
-        }
-
-    
-        function showQuestion() {
-            const questionData = questions[currentQuestion];
-            document.getElementById("question").innerText = questionData.question;
-
-            let answersDiv = document.getElementById("answers");
-            answersDiv.innerHTML = ""; 
-
-            let answerContainer = document.createElement("div");
-            answerContainer.classList.add("answer-container");
-
-            questionData.answers.forEach((answer, index) => {
-                let button = document.createElement("button");
-                button.innerText = answer;
-                button.classList.add("answer-button");
-                button.onclick = () => checkAnswer(index);
-
-                answerContainer.appendChild(button);
-            });
-
-            answersDiv.appendChild(answerContainer);
-        }
-
-        function checkAnswer(selectedIndex) {
-            let correctIndex = questions[currentQuestion].correct;
-            const answerButtons = document.querySelectorAll(".answer-button");
-
-            answerButtons.forEach(button => button.disabled = true);
-
-            if (selectedIndex === correctIndex) {
-                const correctAnim = document.getElementById("correct-animation");
-                correctAnim.style.display = "block";
-
-                if (!completedLevels.has(currentQuestion)) {
-                    completedLevels.add(currentQuestion);
-                    if (currentQuestion > lastCompletedLevel) {
-                        lastCompletedLevel = currentQuestion;
+        class NationalHeroesGame {
+            constructor() {
+                this.questions = [
+                    {
+                        question: "1. A Filipino military leader best known for her role as the female leader of the Ilocano independence movement from Spain.",
+                        answers: ["Gabriela Silang", "Teresa Magbanua", "Mariah Clara", "Josefa Llanes Escoda"],
+                        correct: 0,
+                        video: "Gabriela Silang.mp4"
+                    },
+                    {
+                        question: "2. She was a Filipino revolutionary. She became known as 'Tandang Sora' because of her old age during the Philippine Revolution (1896-1899).",
+                        answers: ["Maggie Leones", "Maria Orosa", "Trinidad Tecson", "Melchora Aquino"],
+                        correct: 3,
+                        video: "Aquino.mp4"
+                    },
+                    {
+                        question: "3. He was a Filipino painter, sculptor, and late-nineteenth-century political figure in the Philippine Revolution.",
+                        answers: ["Apolinario Mabini", "Emilio Aguinaldo", "Juan Luna", "Dakilang Lumpo"],
+                        correct: 2,
+                        video: "Juan Luna.mp4"
+                    },
+                    {
+                        question: "4. He was a great Muslim leader who ruled Mindanao for 52 years and defended it from Spanish conquerors.",
+                        answers: ["Andres Bonifacio", "Sultan Dipatuan Kudarat", "General Gregorio del Pilar", "Melchora Aquino"],
+                        correct: 1,
+                        video: "Sultan Kudarat.mp4"
+                    },
+                    {
+                        question: "5. He was a writer and patriot who inspired modern historians to study revolution, justice, and democracy.",
+                        answers: ["Sultan Dipatuan Kudarat", "Jose Rizal", "Marcelo H. del Pilar", "Juan Luna"],
+                        correct: 2,
+                        video: "Marcelo del Pilar.mp4"
+                    },
+                    {
+                        question: "6. Known as the 'Dakilang Lumpo,' he was a brilliant lawyer, theorist, spokesman, and political philosopher who served as Emilio Aguinaldo's chief advisor.",
+                        answers: ["Apolinario Mabini", "Gabriela Silang", "Sultan Dipatuan Kudarat", "Marcelo H. del Pilar"],
+                        correct: 0,
+                        video: "Apolinario Mabini.mp4"
+                    },
+                    {
+                        question: "7. A Filipino leader who became the first president of the Philippine new republic under the Malolos Congress.",
+                        answers: ["San Pedro", "Josefa", "Hilario", "Emilio Aguinaldo"],
+                        correct: 3,
+                        video: "Emilio Aguinaldo.mp4" 
+                    },
+                    {
+                        question: "8. The 'Father of the Philippine Revolution,' founded and led the Katipunan, a secret society that began the fight for independence from Spain.",
+                        answers: ["Dakilang Lumpo", "Mabini", "Andres Bonifacio", "Gatmaitan"],
+                        correct: 2,
+                        video: "Andres Bonifacio.mp4"
+                    },
+                    {
+                        question: "9. A patriot, doctor, writer, and nationalist who rose to recognition through his literary works.",
+                        answers: ["Andres Bonifacio", "Ancheta", "Jose Rizal", "del Pilar"],
+                        correct: 2,
+                        video: "Jose Rizal.mp4"
                     }
-                }
-
-                setTimeout(() => {
-                    correctAnim.style.display = "none";
-                    showVideo(); 
-                }, 1500); 
-            }
-
-            else {
-                const selectedButton = answerButtons[selectedIndex];
-
-                selectedButton.style.backgroundColor = "#e74c3c";
-                selectedButton.classList.add("shake");
-
-                lives--;
-                updateLives();
-
-                setTimeout(() => {
-                    selectedButton.style.backgroundColor = "";
-                    selectedButton.classList.remove("shake");
-                    answerButtons.forEach(button => button.disabled = false);
-
-                    if (lives <= 0) {
-                        showGameOverPopup();
-                    }
-                }, 1200);
-            }
-        }
-
-        function showVideo() {
-            let videoPage = document.getElementById("video-page");
-            let videoElement = document.getElementById("hero-video");
-            let videoSource = document.getElementById("video-source");
-
-            document.getElementById("quiz-container").style.display = "none";
-            videoPage.style.display = "block";
-            videoSource.src = questions[currentQuestion].video;
-            videoElement.load();
-            backgroundMusic.pause();
-
-            videoElement.play().catch(error => {
-                console.log("Autoplay failed:", error);
-            });
-
-            videoElement.onended = () => {
-                backgroundMusic.play();
-            };
-
-            document.getElementById("next-button").style.display = 
-                currentQuestion < questions.length - 1 ? "inline-block" : "none";
-
-            document.getElementById("finish-button").style.display = 
-                currentQuestion === questions.length - 1 ? "inline-block" : "none";
-        }
-
-        function showGameOverPopup() {
-            const popup = document.createElement('div');
-            popup.classList.add('popup');
-            popup.innerHTML = `
-                <div class="popup-content">
-                <p>Game Over! You've run out of lives.</p>
-                <button id="playAgainBtn">Play Again</button>
-            </div>
-            `;
-            document.body.appendChild(popup);
-
-            const disappointedSound = document.getElementById("disappointed-sound");
-            disappointedSound.currentTime = 0;
-            disappointedSound.play().catch(err => console.log("Disappointed sound error:", err));
-
-            document.getElementById('playAgainBtn').addEventListener('click', () => {
-            document.body.removeChild(popup);
-            document.getElementById("question-selection").style.display = "block";
-            document.getElementById("quiz-container").style.display = "none";
-            document.getElementById("video-page").style.display = "none";
-
-            lives = 10;
-            lastCompletedLevel = -1;
-            completedLevels.clear();
-            updateLives();
-            showQuestionSelection(); // reapply button visibility
-            });
-
-        }
-
-
-        function backToSelection() {
-            const videoElement = document.getElementById("hero-video");
-            videoElement.pause(); 
-            videoElement.currentTime = 0;
-
-            backgroundMusic.play();
-
-            if (!completedLevels.has(currentQuestion)) {
-                completedLevels.add(currentQuestion);
-                lastCompletedLevel = currentQuestion;
-            }
-
-            document.getElementById("video-page").style.display = "none";
-
-            // Here's the fix: re-run button enabling logic
-            showQuestionSelection(); 
-        }
-
-        function restartGame() {
-            lives = 10;
-            updateLives();
-            document.getElementById("congratulations").style.display = "none";
-            document.getElementById("video-page").style.display = "none";
-            document.getElementById("quiz-container").style.display = "none";
-            document.getElementById("question-selection").style.display = "block";
-        }
-
-        function updateLives() {
-            document.getElementById("lives").innerText = "❤️".repeat(lives);
-        }
-
-        function resetGameBoard() {
-            const buttons = document.querySelectorAll('.game-button'); 
-            buttons.forEach(button => {
-                button.textContent = '';
-                button.disabled = false;
-            });
-
-            currentPlayer = 'X'; 
-            gameOver = false;
-        }
-
-        function showCongratulations() {
-            const videoElement = document.getElementById("hero-video");
-            videoElement.pause();
-            videoElement.currentTime = 0;
-
-            backgroundMusic.play();
-
-            const cheerSound = document.getElementById("cheer-sound");
-            cheerSound.currentTime = 0;
-            cheerSound.play().catch(err => console.log("Cheer sound error:", err));
-
-            document.getElementById("quiz-container").style.display = "none";
-            document.getElementById("video-page").style.display = "none";
-            document.getElementById("congratulations").style.display = "block";
-        }
-
-        function restartGame() {
-            lives = 10;
-            lastCompletedLevel = -1;
-            completedLevels.clear();
-            updateLives();
-
-            document.getElementById("congratulations").style.display = "none";
-            document.getElementById("video-page").style.display = "none";
-            document.getElementById("quiz-container").style.display = "none";
-            document.getElementById("question-selection").style.display = "block";
-
-            showQuestionSelection(); // reapply button visibility
-        }
-
-        const backgroundMusic = document.getElementById("background-music");
-       
-        const clickSound = document.getElementById("click-sound");
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const buttons = document.querySelectorAll("button");
-            buttons.forEach(button => {
-                button.addEventListener("click", () => {
-                    clickSound.currentTime = 0; 
-                    clickSound.play().catch(err => console.log("Click sound error:", err));
+                ];
+                
+                this.currentQuestion = 0;
+                this.lives = 5;
+                this.lastCompletedLevel = -1;
+                this.completedLevels = new Set();
+        
+                this.backgroundMusic = document.getElementById("background-music");
+                this.clickSound = document.getElementById("click-sound");
+        
+                document.addEventListener("DOMContentLoaded", () => {
+                    this.setupButtonSounds();
                 });
-            });
-        });
-
-    </script>
+            }
+        
+            setupButtonSounds() {
+                const buttons = document.querySelectorAll("button");
+                buttons.forEach(button => {
+                    button.addEventListener("click", () => {
+                        this.clickSound.currentTime = 0;
+                        this.clickSound.play().catch(err => console.log("Click sound error:", err));
+                    });
+                });
+            }
+        
+            showGuidelines() {
+                document.getElementById("home").style.display = "none";
+                document.getElementById("guidelines").style.display = "block";
+                this.backgroundMusic.play().catch(err => console.log("Autoplay blocked: ", err));
+            }
+        
+            showPlayPage() {
+                document.getElementById("guidelines").style.display = "none";
+                document.getElementById("play-page").style.display = "flex";
+            }
+        
+            showQuestionSelection() {
+                document.getElementById("play-page").style.display = "none";
+                document.getElementById("question-selection").style.display = "block";
+        
+                const buttons = document.querySelectorAll(".circle-button");
+                buttons.forEach((btn, index) => {
+                    if (index > this.lastCompletedLevel + 1) {
+                        btn.disabled = true;
+                        btn.style.opacity = "0.5";
+                        btn.style.cursor = "not-allowed";
+                    } else {
+                        btn.disabled = false;
+                        btn.style.opacity = "1";
+                        btn.style.cursor = "pointer";
+                    }
+                });
+            }
+        
+            startQuiz(index) {
+                if (index - 1 > this.lastCompletedLevel + 1) {
+                    alert("Please complete the current level first before proceeding.");
+                    return;
+                }
+        
+                this.currentQuestion = index - 1;
+                document.getElementById("question-selection").style.display = "none";
+                document.getElementById("quiz-container").style.display = "block";
+                this.showQuestion();
+            }
+        
+            showQuestion() {
+                const questionData = this.questions[this.currentQuestion];
+                document.getElementById("question").innerText = questionData.question;
+        
+                const answersDiv = document.getElementById("answers");
+                answersDiv.innerHTML = "";
+        
+                const answerContainer = document.createElement("div");
+                answerContainer.classList.add("answer-container");
+        
+                questionData.answers.forEach((answer, index) => {
+                    const button = document.createElement("button");
+                    button.innerText = answer;
+                    button.classList.add("answer-button");
+                    button.onclick = () => this.checkAnswer(index);
+        
+                    answerContainer.appendChild(button);
+                });
+        
+                answersDiv.appendChild(answerContainer);
+            }
+        
+            checkAnswer(selectedIndex) {
+                const correctIndex = this.questions[this.currentQuestion].correct;
+                const answerButtons = document.querySelectorAll(".answer-button");
+        
+                answerButtons.forEach(button => button.disabled = true);
+        
+                if (selectedIndex === correctIndex) {
+                    const correctAnim = document.getElementById("correct-animation");
+                    correctAnim.style.display = "block";
+        
+                    if (!this.completedLevels.has(this.currentQuestion)) {
+                        this.completedLevels.add(this.currentQuestion);
+                        if (this.currentQuestion > this.lastCompletedLevel) {
+                            this.lastCompletedLevel = this.currentQuestion;
+                        }
+                    }
+        
+                    setTimeout(() => {
+                        correctAnim.style.display = "none";
+                        this.showVideo();
+                    }, 1500);
+                } else {
+                    const selectedButton = answerButtons[selectedIndex];
+        
+                    selectedButton.style.backgroundColor = "#e74c3c";
+                    selectedButton.classList.add("shake");
+        
+                    this.lives--;
+                    this.updateLives();
+        
+                    setTimeout(() => {
+                        selectedButton.style.backgroundColor = "";
+                        selectedButton.classList.remove("shake");
+                        answerButtons.forEach(button => button.disabled = false);
+        
+                        if (this.lives <= 0) {
+                            this.showGameOverPopup();
+                        }
+                    }, 1200);
+                }
+            }
+        
+            showVideo() {
+                const videoPage = document.getElementById("video-page");
+                const videoElement = document.getElementById("hero-video");
+                const videoSource = document.getElementById("video-source");
+        
+                document.getElementById("quiz-container").style.display = "none";
+                videoPage.style.display = "block";
+                videoSource.src = this.questions[this.currentQuestion].video;
+                videoElement.load();
+                this.backgroundMusic.pause();
+        
+                videoElement.play().catch(error => console.log("Autoplay failed:", error));
+        
+                videoElement.onended = () => {
+                    this.backgroundMusic.play();
+                };
+        
+                document.getElementById("next-button").style.display =
+                    this.currentQuestion < this.questions.length - 1 ? "inline-block" : "none";
+        
+                document.getElementById("finish-button").style.display =
+                    this.currentQuestion === this.questions.length - 1 ? "inline-block" : "none";
+            }
+        
+            showGameOverPopup() {
+                const popup = document.createElement('div');
+                popup.classList.add('popup');
+                popup.innerHTML = `
+                    <div class="popup-content">
+                        <p>Game Over! You've run out of lives.</p>
+                        <button id="playAgainBtn">Play Again</button>
+                    </div>
+                `;
+                document.body.appendChild(popup);
+        
+                const disappointedSound = document.getElementById("disappointed-sound");
+                disappointedSound.currentTime = 0;
+                disappointedSound.play().catch(err => console.log("Disappointed sound error:", err));
+        
+                document.getElementById('playAgainBtn').addEventListener('click', () => {
+                    document.body.removeChild(popup);
+                    document.getElementById("question-selection").style.display = "block";
+                    document.getElementById("quiz-container").style.display = "none";
+                    document.getElementById("video-page").style.display = "none";
+        
+                    this.lives = 5;
+                    this.lastCompletedLevel = -1;
+                    this.completedLevels.clear();
+                    this.updateLives();
+                    this.showQuestionSelection();
+                });
+            }
+        
+            backToSelection() {
+                const videoElement = document.getElementById("hero-video");
+                videoElement.pause();
+                videoElement.currentTime = 0;
+        
+                this.backgroundMusic.play();
+        
+                if (!this.completedLevels.has(this.currentQuestion)) {
+                    this.completedLevels.add(this.currentQuestion);
+                    this.lastCompletedLevel = this.currentQuestion;
+                }
+        
+                document.getElementById("video-page").style.display = "none";
+                this.showQuestionSelection();
+            }
+        
+            showCongratulations() {
+                const videoElement = document.getElementById("hero-video");
+                videoElement.pause();
+                videoElement.currentTime = 0;
+        
+                this.backgroundMusic.play();
+        
+                const cheerSound = document.getElementById("cheer-sound");
+                cheerSound.currentTime = 0;
+                cheerSound.play().catch(err => console.log("Cheer sound error:", err));
+        
+                document.getElementById("quiz-container").style.display = "none";
+                document.getElementById("video-page").style.display = "none";
+                document.getElementById("congratulations").style.display = "block";
+            }
+        
+            restartGame() {
+                this.lives = 5;
+                this.lastCompletedLevel = -1;
+                this.completedLevels.clear();
+                this.updateLives();
+        
+                document.getElementById("congratulations").style.display = "none";
+                document.getElementById("video-page").style.display = "none";
+                document.getElementById("quiz-container").style.display = "none";
+                document.getElementById("question-selection").style.display = "block";
+        
+                this.showQuestionSelection();
+            }
+        
+            updateLives() {
+                document.getElementById("lives").innerText = "❤️".repeat(this.lives);
+            }
+        }
+        
+        // Create a game instance
+        const game = new NationalHeroesGame();
+        
+        // Attach functions to global so buttons work
+        function showGuidelines() { game.showGuidelines(); }
+        function showPlayPage() { game.showPlayPage(); }
+        function showQuestionSelection() { game.showQuestionSelection(); }
+        function startQuiz(index) { game.startQuiz(index); }
+        function backToSelection() { game.backToSelection(); }
+        function showCongratulations() { game.showCongratulations(); }
+        function restartGame() { game.restartGame(); }
+        </script>
+        
